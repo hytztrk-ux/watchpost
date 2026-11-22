@@ -3,11 +3,17 @@ name: Release
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to build and release, e.g. v0.1.0"
+        required: true
 
 permissions:
   contents: write
 
 env:
+  VERSION: ${{ inputs.tag || github.ref_name }}
   CARGO_TERM_COLOR: always
 
 jobs:
@@ -56,7 +62,7 @@ jobs:
         if: runner.os != 'Windows'
         shell: bash
         run: |
-          name="watchpost-${GITHUB_REF_NAME}-${{ matrix.target }}"
+          name="watchpost-${VERSION}-${{ matrix.target }}"
           mkdir -p "dist/$name"
           cp "target/${{ matrix.target }}/release/watchpost" "dist/$name/"
           cp README.md README.tr.md LICENSE CHANGELOG.md watchpost.example.toml watchpost.service "dist/$name/"
@@ -68,7 +74,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          $name = "watchpost-$env:GITHUB_REF_NAME-${{ matrix.target }}"
+          $name = "watchpost-$env:VERSION-${{ matrix.target }}"
           New-Item -ItemType Directory -Force -Path "dist/$name" | Out-Null
           Copy-Item "target/${{ matrix.target }}/release/watchpost.exe" "dist/$name/"
           Copy-Item README.md, README.tr.md, LICENSE, CHANGELOG.md, watchpost.example.toml "dist/$name/"
@@ -96,6 +102,8 @@ jobs:
           merge-multiple: true
       - uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ env.VERSION }}
+          target_commitish: ${{ github.sha }}
           files: dist/*
           generate_release_notes: true
-          prerelease: ${{ contains(github.ref_name, '-') }}
+          prerelease: ${{ contains(env.VERSION, '-') }}
