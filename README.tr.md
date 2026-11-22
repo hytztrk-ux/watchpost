@@ -47,8 +47,7 @@ kullanılabilir. Komut satırı çıktısı İngilizcedir:
 ## Hızlı başlangıç
 
 Bugün için kurulum yolu kaynak koddan derlemektir (Rust 1.88 veya üstü).
-Linux, macOS ve Windows için hazır derlemeler, ilk sürüm etiketlendiğinde
-Releases sayfasına eklenecek.
+Linux, macOS ve Windows için hazır derlenmiş dosyalar [Releases sayfasında](https://github.com/hytztrk-ux/watchpost/releases).
 
 ```sh
 cargo install --git https://github.com/hytztrk-ux/watchpost --locked

@@ -45,8 +45,7 @@ down, so it also works in scripts and CI:
 ## Quick start
 
 Building from source is the way to install it today (Rust 1.88 or newer).
-Prebuilt binaries for Linux, macOS and Windows will be on the
-Releases page once the first version is tagged.
+Prebuilt binaries for Linux, macOS and Windows are on the [Releases page](https://github.com/hytztrk-ux/watchpost/releases).
 
 ```sh
 cargo install --git https://github.com/hytztrk-ux/watchpost --locked
