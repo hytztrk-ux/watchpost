@@ -1,0 +1,8 @@
+target
+.git
+.github
+*.db
+*.db-wal
+*.db-shm
+watchpost.toml
+.env

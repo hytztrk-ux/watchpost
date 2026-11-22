@@ -1,0 +1,57 @@
+# systemd unit for watchpost.
+#
+# Install:
+#   sudo install -m 0755 watchpost /usr/local/bin/watchpost
+#   sudo mkdir -p /etc/watchpost
+#   sudo watchpost --config /etc/watchpost/watchpost.toml init
+#   # edit /etc/watchpost/watchpost.toml and set:  [storage] path = "/var/lib/watchpost/watchpost.db"
+#   # put secrets (TELEGRAM_BOT_TOKEN=..., SMTP_PASSWORD=...) into /etc/watchpost/watchpost.env (mode 0600)
+#   sudo install -m 0644 watchpost.service /etc/systemd/system/watchpost.service
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now watchpost
+#   journalctl -u watchpost -f
+
+[Unit]
+Description=watchpost uptime and service monitor
+Documentation=https://github.com/hytztrk-ux/watchpost
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/watchpost --config /etc/watchpost/watchpost.toml run
+EnvironmentFile=-/etc/watchpost/watchpost.env
+Restart=on-failure
+RestartSec=5s
+
+# Runs as a throw-away system user; /var/lib/watchpost is created and owned by it.
+DynamicUser=yes
+StateDirectory=watchpost
+WorkingDirectory=/var/lib/watchpost
+
+# Hardening.
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+CapabilityBoundingSet=
+# A generous ceiling; watchpost normally needs a few MB.
+MemoryMax=128M
+
+[Install]
+WantedBy=multi-user.target

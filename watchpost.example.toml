@@ -1,0 +1,118 @@
+# watchpost configuration
+# =======================
+#
+# Durations are written like "30s", "5m", "1h" or "1h 30m".
+# Any string value may reference an environment variable as ${NAME}
+# (or ${NAME:-default}); use this for tokens and passwords.
+# Full reference: README.md, section "Configuration reference".
+
+# Language of the status page and notifications: "en" or "tr".
+language = "en"
+
+# Title shown on the status page and in notifications.
+title = "My services"
+
+[web]
+# Set to false to run without the status page.
+enabled = true
+# Address of the status page. Use "0.0.0.0:8787" to listen on all interfaces
+# (put it behind a reverse proxy with TLS if it is reachable from the internet).
+listen = "127.0.0.1:8787"
+# Optional: public address of the status page, linked in notifications.
+# public_url = "https://status.example.com"
+
+# Optional: protect the page and /api/status with HTTP basic auth.
+# /healthz always stays open.
+# [web.auth]
+# username = "admin"
+# password = "${WATCHPOST_WEB_PASSWORD}"
+
+[storage]
+# SQLite file for check history. Relative paths are resolved next to this file.
+path = "watchpost.db"
+# Check results older than this are deleted.
+retention_days = 30
+
+# Defaults for every monitor; each monitor may override them.
+[defaults]
+interval = "60s"
+timeout = "10s"
+# Extra consecutive failures before a monitor is marked down
+# (1 = it must fail twice in a row).
+retries = 1
+# Repeat the "still down" notification this often. "0s" disables reminders.
+repeat_reminder = "0s"
+
+# ---------------------------------------------------------------------------
+# Monitors
+# ---------------------------------------------------------------------------
+
+[[monitor]]
+name = "Website"
+type = "http"
+url = "https://example.com/"
+# method = "GET"
+# Accepted status codes: numbers, classes ("2xx") or ranges ("200-204").
+# expected_status = ["2xx"]
+# The response body must contain this text:
+# keyword = "Example Domain"
+# headers = { "User-Agent" = "watchpost", "Authorization" = "Bearer ${API_TOKEN}" }
+# body = '{"ping": true}'
+# follow_redirects = true
+# skip_tls_verify = false
+# interval = "30s"
+# timeout = "5s"
+# retries = 2
+
+[[monitor]]
+name = "SSH"
+type = "tcp"
+host = "127.0.0.1"
+port = 22
+
+[[monitor]]
+name = "example.com certificate"
+type = "tls"
+host = "example.com"
+# port = 443
+# Warn this many days before the certificate expires.
+warn_days = 14
+# Certificate checks do not need to run often.
+interval = "6h"
+# server_name = "example.com"   # SNI name, defaults to host
+# skip_verify = false           # only check the date, not the chain
+# ca_file = "/etc/ssl/my-ca.pem" # extra trusted CA certificates
+
+# ---------------------------------------------------------------------------
+# Notifiers
+# ---------------------------------------------------------------------------
+# Every monitor notifies all notifiers unless it sets
+#   notify = ["name1", "name2"]   (or notify = [] for none).
+# Try them with:  watchpost test-notify
+
+# [[notifier]]
+# name = "telegram"
+# type = "telegram"
+# bot_token = "${TELEGRAM_BOT_TOKEN}"
+# chat_id = "123456789"
+
+# [[notifier]]
+# name = "discord"
+# type = "discord"
+# webhook_url = "${DISCORD_WEBHOOK_URL}"
+
+# [[notifier]]
+# name = "webhook"
+# type = "webhook"
+# url = "https://hooks.example.com/watchpost"
+# headers = { "Authorization" = "Bearer ${WEBHOOK_TOKEN}" }
+
+# [[notifier]]
+# name = "email"
+# type = "email"
+# host = "smtp.example.com"
+# tls = "starttls"   # "starttls" (port 587), "tls" (port 465) or "none"
+# username = "alerts@example.com"
+# password = "${SMTP_PASSWORD}"
+# from = "watchpost <alerts@example.com>"
+# to = ["ops@example.com"]

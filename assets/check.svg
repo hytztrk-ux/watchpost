@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="831" height="324" viewBox="0 0 831 324">
+<rect width="831" height="324" rx="10" fill="#151a21"/>
+<rect x="1" y="1" width="829" height="322" rx="9" fill="none" stroke="#2a323d" stroke-width="2"/>
+<circle cx="22" cy="20" r="6" fill="#3a424d"/><circle cx="42" cy="20" r="6" fill="#3a424d"/><circle cx="62" cy="20" r="6" fill="#3a424d"/>
+<g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', 'Liberation Mono', monospace" font-size="14.5">
+<text y="52" xml:space="preserve"><tspan x="22.0" fill="#8b95a3">$ </tspan><tspan fill="#ffffff" font-weight="700">watchpost check</tspan></text>
+<text y="72" xml:space="preserve"><tspan x="22.0" fill="#d7dce3">Configuration OK: 5 monitor(s), 1 notifier(s).</tspan></text>
+<text y="92" xml:space="preserve"></text>
+<text y="112" xml:space="preserve"><tspan x="22.0" fill="#d7dce3">NAME                   TYPE  STATUS  LATENCY  DETAIL</tspan></text>
+<text y="132" xml:space="preserve"><tspan x="22.0" fill="#d7dce3">Website                http  </tspan><tspan fill="#3ccf7a" font-weight="700">UP</tspan><tspan fill="#d7dce3">      51 ms    HTTP 200, keyword found</tspan></text>
+<text y="152" xml:space="preserve"><tspan x="22.0" fill="#d7dce3">API                    http  </tspan><tspan fill="#3ccf7a" font-weight="700">UP</tspan><tspan fill="#d7dce3">      17 ms    HTTP 200</tspan></text>
+<text y="172" xml:space="preserve"><tspan x="22.0" fill="#d7dce3">Postgres               tcp   </tspan><tspan fill="#3ccf7a" font-weight="700">UP</tspan><tspan fill="#d7dce3">      0 ms     connected</tspan></text>
+<text y="192" xml:space="preserve"><tspan x="22.0" fill="#d7dce3">Redis                  tcp   </tspan><tspan fill="#ff6b5e" font-weight="700">DOWN</tspan><tspan fill="#d7dce3">    0 ms     connection refused</tspan></text>
+<text y="212" xml:space="preserve"><tspan x="22.0" fill="#d7dce3">localhost certificate  tls   </tspan><tspan fill="#f0a92e" font-weight="700">WARN</tspan><tspan fill="#d7dce3">    1 ms     certificate expires in 8 days (2026-12-01)</tspan></text>
+<text y="232" xml:space="preserve"></text>
+<text y="252" xml:space="preserve"><tspan x="22.0" fill="#d7dce3">1 of 5 monitor(s) are down.</tspan></text>
+<text y="272" xml:space="preserve"><tspan x="22.0" fill="#8b95a3">$ </tspan><tspan fill="#ffffff" font-weight="700">echo $?</tspan></text>
+<text y="292" xml:space="preserve"><tspan x="22.0" fill="#d7dce3">1</tspan></text>
+</g></svg>
